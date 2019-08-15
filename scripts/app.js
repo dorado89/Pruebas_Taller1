@@ -128,6 +128,17 @@
             } else {
                 // Return the initial weather forecast since no data is available.
                 app.updateTimetableCard(initialStationTimetable);
+                app.updateTimetableCard(caches.match(url)
+    .then((response) => {
+      if (response) {
+        return response.json();
+      }
+      return null;
+    })
+    .catch((err) => {
+      console.error('Error getting data from cache', err);
+      return null;
+    }));
             }
         };
         request.open('GET', url);
