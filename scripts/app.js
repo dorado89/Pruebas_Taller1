@@ -72,7 +72,9 @@
         var dataLastUpdated = new Date(data.created);
         var schedules = data.schedules;
         var card = app.visibleCards[key];
+        
         if (!card) {
+            localStorage[key] = data.label;
             var label = data.label.split(', ');
             var title = label[0];
             var subtitle = label[1];
@@ -102,7 +104,6 @@
         }
     };
 
-
     /*****************************************************************************
      *
      * Methods for dealing with the model
@@ -128,17 +129,6 @@
             } else {
                 // Return the initial weather forecast since no data is available.
                 app.updateTimetableCard(initialStationTimetable);
-//                app.updateTimetableCard(caches.match(url)
-//                        .then((response) => {
-//                            if (response) {
-//                                return response.json();
-//                            }
-//                            return null;
-//                        })
-//                        .catch((err) => {
-//                            console.error('Error getting data from cache', err);
-//                            return null;
-//                        }));
             }
         };
         request.open('GET', url);
@@ -192,6 +182,10 @@
      ************************************************************************/
 
     app.getSchedule('metros/1/bastille/A', 'Bastille, Direction La Défense');
+    for (var i = 0; i < localStorage.length; i++) {
+        app.getSchedule(localStorage.key(i), localStorage.getItem(localStorage.key(i)));
+        app.updateSchedules();
+    }
     app.selectedTimetables = [
         {key: initialStationTimetable.key, label: initialStationTimetable.label}
     ];
