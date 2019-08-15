@@ -72,7 +72,6 @@
         var dataLastUpdated = new Date(data.created);
         var schedules = data.schedules;
         var card = app.visibleCards[key];
-
         if (!card) {
             var label = data.label.split(', ');
             var title = label[0];
@@ -88,10 +87,10 @@
         card.querySelector('.card-last-updated').textContent = data.created;
 
         var scheduleUIs = card.querySelectorAll('.schedule');
-        for(var i = 0; i<4; i++) {
+        for (var i = 0; i < 4; i++) {
             var schedule = schedules[i];
             var scheduleUI = scheduleUIs[i];
-            if(schedule && scheduleUI) {
+            if (schedule && scheduleUI) {
                 scheduleUI.querySelector('.message').textContent = schedule.message;
             }
         }
@@ -102,6 +101,7 @@
             app.isLoading = false;
         }
     };
+
 
     /*****************************************************************************
      *
@@ -128,17 +128,17 @@
             } else {
                 // Return the initial weather forecast since no data is available.
                 app.updateTimetableCard(initialStationTimetable);
-                app.updateTimetableCard(caches.match(url)
-    .then((response) => {
-      if (response) {
-        return response.json();
-      }
-      return null;
-    })
-    .catch((err) => {
-      console.error('Error getting data from cache', err);
-      return null;
-    }));
+//                app.updateTimetableCard(caches.match(url)
+//                        .then((response) => {
+//                            if (response) {
+//                                return response.json();
+//                            }
+//                            return null;
+//                        })
+//                        .catch((err) => {
+//                            console.error('Error getting data from cache', err);
+//                            return null;
+//                        }));
             }
         };
         request.open('GET', url);
